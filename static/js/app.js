@@ -6,7 +6,8 @@ function buildMetadata(sample) {
     let metadata = data.metadata;
 
     // Filter the metadata for the object with the desired sample number
-    let result = metadata.filter(sampleObj => sampleObj.id == sample);
+    let resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
+    let result = resultArray[0];
 
     // Use d3 to select the panel with id of `#sample-metadata`
     let panel = d3.select("#sample-metadata");
@@ -31,24 +32,38 @@ function buildCharts(sample) {
     let samples = data.samples;
 
     // Filter the samples for the object with the desired sample number
-    let result = samples.filter(sampleObj => sampleObj.id == sample)[0];
+    let resultArray = samples.filter(sampleObj => sampleObj.id == sample);
+    let result = resultArray[0];
 
     // Get the otu_ids, otu_labels, and sample_values
-    let getOtuIds = result[0].otu_ids;
-    let getOtuLabels = result[0].otu_labels;
-    let getSampleValues = result[0].sample_values;
+    let otu_ids = result.otu_ids;
+    let otu_labels = result.otu_labels;
+    let sample_values = result.sample_values;
 
     // Build a Bubble Chart
     let bubble_chart = {
-      x: getOtuIds,
-      y: getSampleValues,
-      text: getOtuLabels,
+
+      // For the Bubble Chart, map the otu_ids to a list of strings for the x values
+      // Mapped the sample_values to a list of numbers for the y values
+      // Mapped the otu_labels to a list of strings for the text values
+      // Mapped the sample_values to a list of numbers for the marker size
+      // Mapped the otu_ids to a list of numbers for the marker color
+      x: otu_ids,
+      y: sample_values,
+      text: otu_labels,
       mode: "markers",
       marker: {
-        color: getOtuIds,
-        size: getSampleValues
+        color: otu_ids,
+        size: sample_values,
+        colorscale: "Earth"
       }
     };
+
+    // Build the Bubble Layout
+    // Set the title to "Bacteria Cultures Per Sample"
+    // Set the xaxis title to "OTU ID"
+    // Set the yaxis title to "Number of Bacteria"
+    // Set the height and width of the chart
     let bubblelayout = {
       title: "Bacteria Cultures Per Sample",
       xaxis: { title: "OTU ID" },
@@ -58,13 +73,16 @@ function buildCharts(sample) {
     };
 
     // Render the Bubble Chart
-    Plotly.newPlot("bubble", [bubble_chart], layout);
+    Plotly.newPlot("bubble", [bubble_chart], bubblelayout);
 
+
+    // Build a Bar Chart
     let bar_chart = {
+
     // For the Bar Chart, map the otu_ids to a list of strings for your yticks
-      x: getSampleValues.slice(0, 10).reverse(),
-      y: getOtuIds.slice(0, 10).map(id => `OTU ${id}`).reverse(),
-      text: getOtuLabels.slice(0, 10).reverse(),
+      x: sample_values.slice(0, 10).reverse(),
+      y: otu_ids.slice(0, 10).map(id => `OTU ${id}`).reverse(),
+      text: otu_labels.slice(0, 10).reverse(),
       type: "bar",
       orientation: "h"
    };
@@ -92,14 +110,11 @@ function init() {
     // Use d3 to select the dropdown with id of `#selDataset`
     let dropdown = d3.select("#selDataset");
 
-
     // Use the list of sample names to populate the select options
     // Hint: Inside a loop, you will need to use d3 to append a new
     // option for each sample name.
     names.forEach((name) => {
-      
       dropdown.append("option").text(name).property("value", name);
-
     });
     
     // Get the first sample from the list
