@@ -54,7 +54,7 @@ The Belly Button Biodiversity Dashboard visualizes microbial data from human nav
     ```javascript
     Plotly.newPlot("bar", [bar_chart], barLayout);
     ```
-    ![precipitation](https://github.com/omidk414/sqlalchemy-challenge/blob/main/images/precipitation.png)
+    ![bar_chart](https://github.com/omidk414/belly-button-challenge/blob/main/images/Bar_Chart.png)
 
 
 ### Bubble Chart
@@ -102,7 +102,7 @@ The Belly Button Biodiversity Dashboard visualizes microbial data from human nav
     Plotly.newPlot("bubble", [bubble_chart], bubble_layout);
 
     ```
-    ![precipitation](https://github.com/omidk414/sqlalchemy-challenge/blob/main/images/precipitation.png)
+    ![bubble_chart](https://github.com/omidk414/belly-button-challenge/blob/main/images/Bubble_Chart.png)
 
 ### Metadata Display
 
@@ -127,7 +127,7 @@ The Belly Button Biodiversity Dashboard visualizes microbial data from human nav
      });
    }
    ```
-    ![precipitation](https://github.com/omidk414/sqlalchemy-challenge/blob/main/images/precipitation.png)
+    ![metadata](https://github.com/omidk414/belly-button-challenge/blob/main/images/metadata.png)
 
 ### Updating Metadata
 
@@ -141,7 +141,12 @@ The Belly Button Biodiversity Dashboard visualizes microbial data from human nav
      buildMetadata(newSample);
    }
    ```
-   ![precipitation](https://github.com/omidk414/sqlalchemy-challenge/blob/main/images/precipitation.png)
+  Example 1: 
+      ![example1](https://github.com/omidk414/belly-button-challenge/blob/main/images/Example1.png)
+
+
+  Example 2:
+      ![example2](https://github.com/omidk414/belly-button-challenge/blob/main/images/Example2.png)
 
 ### Deployment
 
